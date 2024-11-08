@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Base64 Decoder</title>
+  <script>
+    async function loadWasm() {
+      const go = new Go();
+      const wasmModule = await WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject);
+      go.run(wasmModule.instance);
+    }
+    loadWasm();
+  </script>
+</head>
+<body>
+  <h2>Base64 Decoder</h2>
+  <input type="text" id="input" placeholder="Enter Base64 string">
+  <button onclick="decode()">Decode</button>
+  <p id="result"></p>
+  <script>
+    function decode() {
+      const input = document.getElementById("input").value;
+      document.getElementById("result").textContent = decodeBase64(input);
+    }
+  </script>
+</body>
+</html>
